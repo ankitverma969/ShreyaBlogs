@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Unsent letters cinematic cover">
+  <defs><linearGradient id="g" x1="0" x2="1" y1="0" y2="1"><stop stop-color="#2d2031"/><stop offset=".62" stop-color="#8e4c6a"/><stop offset="1" stop-color="#fff8eb"/></linearGradient></defs>
+  <rect width="1600" height="900" fill="url(#g)"/>
+  <rect x="420" y="210" width="760" height="460" rx="24" fill="#fff8eb" opacity=".84"/>
+  <path d="M420 245 800 500 1180 245" fill="none" stroke="#8e4c6a" stroke-width="16" opacity=".65"/>
+</svg>

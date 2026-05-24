@@ -1,0 +1,13 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1600 900" role="img" aria-label="Hindi handwritten diary cover">
+  <defs>
+    <linearGradient id="g" x1="0" x2="1" y1="0" y2="1">
+      <stop stop-color="#2d2031"/>
+      <stop offset=".52" stop-color="#8e4c6a"/>
+      <stop offset="1" stop-color="#f7b7c8"/>
+    </linearGradient>
+  </defs>
+  <rect width="1600" height="900" fill="url(#g)"/>
+  <rect x="250" y="150" width="1100" height="610" rx="34" fill="#fff8eb" opacity=".82"/>
+  <path d="M360 310h880M360 430h760M360 550h820" stroke="#8e4c6a" stroke-width="9" opacity=".28"/>
+  <text x="800" y="470" text-anchor="middle" font-family="serif" font-size="150" fill="#7f3d5a" opacity=".78">अधूरी मोहब्बत</text>
+</svg>

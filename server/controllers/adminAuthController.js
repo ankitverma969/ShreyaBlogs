@@ -61,6 +61,13 @@ export const logoutAdmin = asyncHandler(async (_req, res) => {
 });
 
 export const getAdminMe = asyncHandler(async (req, res) => {
+  if (!req.admin) {
+    return res.status(200).json({
+      success: true,
+      admin: null
+    });
+  }
+
   res.status(200).json({
     success: true,
     admin: sendAdmin(req.admin)

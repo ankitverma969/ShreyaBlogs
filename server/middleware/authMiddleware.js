@@ -34,3 +34,35 @@ export async function protectAdmin(req, _res, next) {
     next(error);
   }
 }
+
+export async function optionalAdmin(req, _res, next) {
+  try {
+    const token =
+      req.signedCookies?.adminToken ||
+      req.cookies?.adminToken ||
+      req.headers.authorization?.replace('Bearer ', '');
+
+    if (!token) {
+      return next();
+    }
+
+    if (!process.env.JWT_SECRET) {
+      return next();
+    }
+
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      if (decoded.role === 'admin') {
+        const admin = await Admin.findById(decoded.id).select('-password');
+        if (admin) {
+          req.admin = admin;
+        }
+      }
+    } catch (err) {
+      // invalid token, just ignore
+    }
+    next();
+  } catch (error) {
+    next();
+  }
+}

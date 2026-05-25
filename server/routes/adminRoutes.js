@@ -20,7 +20,7 @@ import {
   updatePost,
   uploadMedia
 } from '../controllers/adminPostController.js';
-import { protectAdmin } from '../middleware/authMiddleware.js';
+import { optionalAdmin, protectAdmin } from '../middleware/authMiddleware.js';
 import { loginLimiter } from '../middleware/rateLimiter.js';
 import { upload } from '../middleware/uploadMiddleware.js';
 import { optimizeUploadedImages } from '../middleware/uploadMiddleware.js';
@@ -29,7 +29,7 @@ const router = Router();
 
 router.post('/login', loginLimiter, loginAdmin);
 router.post('/logout', protectAdmin, logoutAdmin);
-router.get('/me', protectAdmin, getAdminMe);
+router.get('/me', optionalAdmin, getAdminMe);
 
 router.get('/analytics', protectAdmin, getDashboardAnalytics);
 

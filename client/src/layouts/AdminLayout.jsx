@@ -28,6 +28,9 @@ function AdminLayout() {
         <NavLink to="/v1/adminShreyaTiwari/posts">
           <span aria-hidden="true">📂</span> Manage Posts
         </NavLink>
+        <NavLink to="/v1/adminShreyaTiwari/messages">
+          <span aria-hidden="true">✉️</span> Messages
+        </NavLink>
         <NavLink to="/v1/adminShreyaTiwari/analytics">
           <span aria-hidden="true">📊</span> Analytics
         </NavLink>

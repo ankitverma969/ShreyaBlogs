@@ -1,6 +1,6 @@
-# Poetic Storytelling Platform
+# Shreya Writes - Poetic Storytelling Platform
 
-A production-ready MERN starter for a public poetry, shayari, and story website with a private admin dashboard.
+A production-ready MERN stack application designed as a personal digital diary for "Shreya Writes", serving public poetry, shayari, and stories with an immersive handwritten design and a private admin dashboard.
 
 ## Structure
 

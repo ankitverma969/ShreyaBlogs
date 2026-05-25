@@ -1,7 +1,6 @@
 import { motion, useScroll, useTransform } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import PageTransition from '../components/PageTransition.jsx';
-import ReactionBar from '../components/ReactionBar.jsx';
 import SEO from '../components/SEO.jsx';
 import WritingCard from '../components/WritingCard.jsx';
 import { publicService } from '../services/publicService.js';
@@ -39,7 +38,7 @@ function Home() {
         <div className="container hero-grid">
           <motion.div className="hero-copy" style={{ y }}>
             <p className="eyebrow">An emotional digital diary</p>
-            <h1 className="handwriting-reveal">Words that arrive softly, फिर दिल में ठहर जाते हैं.</h1>
+            <h1 className="handwriting-reveal">Words that arrive softly, and stay in the heart forever.</h1>
             <p>
               Read Hindi shayari, Devanagari poems, English stories, and mixed-language pieces rendered like ink on warm paper,
               with anonymous reactions from hearts that understood.
@@ -80,55 +79,24 @@ function Home() {
         </div> : <p className="empty-state">Trending will appear after real readers view, like, share, or react.</p>}
       </section>
 
-      {(hindiFeatured || hindiTrending.length > 0) && (
-        <section className="container section-block hindi-featured-section">
-          <div className="section-heading">
-            <p className="eyebrow">हिन्दी डायरी</p>
-            <h2 className="language-title language-hindi">हाथों की लिखावट जैसी शायरी</h2>
-          </div>
-          {hindiFeatured && <WritingCard post={hindiFeatured} accent />}
-          {hindiTrending.length > 0 && (
-            <div className="card-grid hindi-grid">
-              {hindiTrending.slice(0, 3).map((post) => (
-                <WritingCard key={post._id || post.id} post={post} />
-              ))}
-            </div>
-          )}
-        </section>
-      )}
+
+
+
 
       <section className="container section-block">
         <div className="section-heading">
-          <p className="eyebrow">Categories</p>
-          <h2>Choose the mood of the page</h2>
+          <p className="eyebrow">Latest uploads</p>
+          <h2>Fresh ink</h2>
         </div>
-        <div className="category-cloud">
-          {categories.map((category) => (
-            <Link key={category._id || category.name} to={`/category/${category._id || category.name}`}>
-              {category._id || category.name}
-            </Link>
-          ))}
-        </div>
-      </section>
-
-      <section className="container section-block two-column-section">
-        <div>
-          <div className="section-heading">
-            <p className="eyebrow">Latest uploads</p>
-            <h2>Fresh ink</h2>
-          </div>
-          <div className="latest-stack">
+        {latest.length > 0 ? (
+          <div className="card-grid">
             {latest.slice(0, 3).map((post) => (
               <WritingCard key={post._id || post.id} post={post} />
             ))}
-            {!latest.length && <p className="empty-state">No published writings yet.</p>}
           </div>
-        </div>
-        {featured && <div className="reaction-highlight">
-          <p className="eyebrow">Emotional highlights</p>
-          <h2>How readers felt</h2>
-          <ReactionBar counts={featured.reactions} selected="" onReact={() => {}} />
-        </div>}
+        ) : (
+          <p className="empty-state">No published writings yet.</p>
+        )}
       </section>
     </PageTransition>
   );

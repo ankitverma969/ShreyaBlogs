@@ -33,6 +33,9 @@ export const adminService = {
   comments() {
     return api.get('/admin/comments');
   },
+  approveComment(commentId) {
+    return api.patch(`/admin/comments/${commentId}/approve`);
+  },
   moderateComment(id, action) {
     return api.patch(`/admin/comments/${id}`, { action });
   },
@@ -44,5 +47,14 @@ export const adminService = {
   },
   removeIdentityAction(id) {
     return api.delete(`/admin/moderation/identities/${id}`);
+  },
+  getMessages() {
+    return api.get('/admin/messages');
+  },
+  markMessageRead(id) {
+    return api.patch(`/admin/messages/${id}/read`);
+  },
+  deleteMessage(id) {
+    return api.delete(`/admin/messages/${id}`);
   }
 };

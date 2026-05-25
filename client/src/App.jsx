@@ -20,10 +20,12 @@ const Contact = lazy(() => import('./pages/Contact.jsx'));
 const AdminLogin = lazy(() => import('./pages/AdminLogin.jsx'));
 const AdminDashboard = lazy(() => import('./pages/AdminDashboard.jsx'));
 const CreatePost = lazy(() => import('./pages/CreatePost.jsx'));
+const EditPost = lazy(() => import('./pages/EditPost.jsx'));
 const ManagePosts = lazy(() => import('./pages/ManagePosts.jsx'));
 const Analytics = lazy(() => import('./pages/Analytics.jsx'));
 const CommentsModeration = lazy(() => import('./pages/CommentsModeration.jsx'));
 const Settings = lazy(() => import('./pages/Settings.jsx'));
+const AdminMessages = lazy(() => import('./pages/AdminMessages.jsx'));
 const NotFound = lazy(() => import('./pages/NotFound.jsx'));
 
 function App() {
@@ -53,8 +55,10 @@ function App() {
               <Route index element={<AdminDashboard />} />
               <Route path="create" element={<CreatePost />} />
               <Route path="posts" element={<ManagePosts />} />
+              <Route path="posts/edit/:id" element={<EditPost />} />
               <Route path="analytics" element={<Analytics />} />
               <Route path="comments" element={<CommentsModeration />} />
+              <Route path="messages" element={<AdminMessages />} />
               <Route path="settings" element={<Settings />} />
             </Route>
           </Route>

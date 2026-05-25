@@ -13,7 +13,7 @@ async function repairIndexes() {
     await PublicInteraction.collection.dropIndex('postId_1_type_1_fingerprint_1');
     console.log('Dropped legacy public interaction unique index.');
   } catch (error) {
-    if (error.codeName !== 'IndexNotFound') throw error;
+    if (error.codeName !== 'IndexNotFound' && error.codeName !== 'NamespaceNotFound') throw error;
   }
 
   await PublicInteraction.syncIndexes();

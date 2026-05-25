@@ -47,5 +47,8 @@ export const publicService = {
   },
   createComment(payload) {
     return api.post('/comments/create', payload, { headers: fingerprintHeaders() });
+  },
+  contact(payload) {
+    return api.post('/contact', payload);
   }
 };

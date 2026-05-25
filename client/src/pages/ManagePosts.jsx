@@ -1,10 +1,12 @@
 import { useEffect, useMemo, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import ConfirmModal from '../components/ConfirmModal.jsx';
 import PageTransition from '../components/PageTransition.jsx';
 import Toast from '../components/Toast.jsx';
 import { adminService } from '../services/adminService.js';
 
 function ManagePosts() {
+  const navigate = useNavigate();
   const [posts, setPosts] = useState([]);
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('All');
@@ -96,7 +98,17 @@ function ManagePosts() {
       {editTarget && (
         <div className="modal-backdrop" role="dialog" aria-modal="true">
           <form className="confirm-modal admin-control-form" onSubmit={savePostControls}>
-            <h2>Post controls</h2>
+            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center' }}>
+              <h2 style={{ margin: 0 }}>Post controls</h2>
+              <button 
+                type="button" 
+                onClick={() => setEditTarget(null)}
+                style={{ background: 'none', border: 'none', color: 'var(--muted)', fontSize: '1.5rem', cursor: 'pointer', padding: '0 8px' }}
+                aria-label="Close"
+              >
+                &times;
+              </button>
+            </div>
             <label>
               Language
               <select name="language" defaultValue={editTarget.language || 'hindi'}>
@@ -175,6 +187,7 @@ function ManagePosts() {
               </p>
             </div>
             <div className="table-actions">
+              <button type="button" onClick={() => navigate(`/v1/adminShreyaTiwari/posts/edit/${post.slug}`)}>Edit Post</button>
               <button type="button" onClick={() => setEditTarget(post)}>Controls</button>
               <button type="button" onClick={() => togglePublish(post)}>
                 {post.status === 'published' ? 'Unpublish' : 'Publish'}

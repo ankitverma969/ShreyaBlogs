@@ -52,7 +52,21 @@ export const getPostBySlug = asyncHandler(async (req, res) => {
     throw new AppError('Writing not found', 404);
   }
 
-  sendSuccess(res, { data: { post } });
+  let suggestedPosts = await Post.find({
+    ...publicFilter(),
+    _id: { $ne: post._id },
+    category: post.category
+  }).sort({ publishedAt: -1, createdAt: -1 }).select('slug title category language').limit(3).lean();
+
+  if (suggestedPosts.length < 3) {
+    const morePosts = await Post.find({
+      ...publicFilter(),
+      _id: { $ne: post._id, $nin: suggestedPosts.map(p => p._id) }
+    }).sort({ publishedAt: -1, createdAt: -1 }).select('slug title category language').limit(3 - suggestedPosts.length).lean();
+    suggestedPosts = [...suggestedPosts, ...morePosts];
+  }
+
+  sendSuccess(res, { data: { post, suggestedPosts } });
 });
 
 export const getTrendingPosts = asyncHandler(async (_req, res) => {

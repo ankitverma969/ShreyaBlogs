@@ -9,6 +9,11 @@ import {
   removeIdentityAction
 } from '../controllers/adminModerationController.js';
 import {
+  deleteMessage,
+  getMessages,
+  markMessageRead
+} from '../controllers/adminMessageController.js';
+import {
   createPost,
   deletePost,
   listPosts,
@@ -49,5 +54,9 @@ router.patch('/comments/:id/approve', protectAdmin, approveComment);
 router.get('/moderation', protectAdmin, getModerationOverview);
 router.post('/moderation/identities', protectAdmin, createIdentityAction);
 router.delete('/moderation/identities/:id', protectAdmin, removeIdentityAction);
+
+router.get('/messages', protectAdmin, getMessages);
+router.patch('/messages/:id/read', protectAdmin, markMessageRead);
+router.delete('/messages/:id', protectAdmin, deleteMessage);
 
 export default router;

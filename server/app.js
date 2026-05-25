@@ -77,10 +77,13 @@ app.use(mongoSanitizeMiddleware);
 app.use(sanitizeRequest);
 app.use('/uploads', cachePublic(60 * 60 * 24 * 7), express.static(path.join(__dirname, 'uploads')));
 
+import publicContactRoutes from './routes/publicContactRoutes.js';
+
 app.use('/api', healthRoutes);
 app.use('/api/admin', noStore, adminRoutes);
 app.use('/api/posts', publicPostRoutes);
 app.use('/api/comments', publicCommentRoutes);
+app.use('/api/contact', publicContactRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

@@ -40,12 +40,7 @@ function Navbar() {
               {link.label}
             </NavLink>
           ))}
-          <NavLink className="admin-pill" to="/v1/adminShreyaTiwari/login" onClick={() => setIsOpen(false)}>
-            Admin
-          </NavLink>
-          <button className="theme-toggle" type="button" onClick={toggleTheme} aria-label="Toggle theme">
-            {theme === 'dark' ? 'Light' : 'Dark'}
-          </button>
+
         </div>
       </nav>
     </header>

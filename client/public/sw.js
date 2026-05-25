@@ -1,4 +1,4 @@
-const CACHE_NAME = 'shreya-writes-v1';
+const CACHE_NAME = 'shreya-writes-v2';
 const STATIC_ASSETS = ['/', '/manifest.json', '/robots.txt'];
 
 self.addEventListener('install', (event) => {

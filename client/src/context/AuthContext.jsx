@@ -16,12 +16,16 @@ export function AuthProvider({ children }) {
 
   async function login(credentials) {
     const { data } = await adminService.login(credentials);
+    if (data.token) {
+      localStorage.setItem('adminToken', data.token);
+    }
     setAdmin(data.admin);
     return data;
   }
 
   async function logout() {
     await adminService.logout();
+    localStorage.removeItem('adminToken');
     setAdmin(null);
   }
 

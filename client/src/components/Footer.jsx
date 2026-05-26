@@ -20,7 +20,10 @@ function Footer() {
           <p>New pieces arrive with moonlight, monsoon air, and tiny acts of courage.</p>
         </div>
       </div>
-      <p className="footer-bottom">Made By MrRadhaJI</p>
+      <div className="footer-bottom" style={{ textAlign: 'center' }}>
+        <p>Made By MrRadhaJI</p>
+        <p>&copy; 2026 Shreya Tiwari. All rights reserved.</p>
+      </div>
     </footer>
   );
 }

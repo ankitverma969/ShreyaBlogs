@@ -4,9 +4,11 @@ import ConfirmModal from '../components/ConfirmModal.jsx';
 import PageTransition from '../components/PageTransition.jsx';
 import Toast from '../components/Toast.jsx';
 import { adminService } from '../services/adminService.js';
+import { useSocket } from '../context/SocketContext.jsx';
 
 function ManagePosts() {
   const navigate = useNavigate();
+  const socket = useSocket();
   const [posts, setPosts] = useState([]);
   const [query, setQuery] = useState('');
   const [category, setCategory] = useState('All');
@@ -20,6 +22,15 @@ function ManagePosts() {
       .then(({ data }) => setPosts(data.posts))
       .catch(() => setPosts([]));
   }, []);
+
+  useEffect(() => {
+    if (!socket) return;
+    const handlePostDeleted = (postId) => {
+      setPosts((prev) => prev.filter((p) => p._id !== postId));
+    };
+    socket.on('postDeleted', handlePostDeleted);
+    return () => socket.off('postDeleted', handlePostDeleted);
+  }, [socket]);
 
   const filteredPosts = useMemo(
     () =>

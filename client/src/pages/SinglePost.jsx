@@ -8,6 +8,7 @@ import ReadingProgress from '../components/ReadingProgress.jsx';
 import SEO from '../components/SEO.jsx';
 import ShareCard from '../components/ShareCard.jsx';
 import { publicService } from '../services/publicService.js';
+import { useSocket } from '../context/SocketContext.jsx';
 import { addRecentlyRead, getSavedReaction, isBookmarked, saveReaction, toggleBookmark } from '../utils/localLibrary.js';
 
 function SinglePost() {
@@ -20,6 +21,7 @@ function SinglePost() {
   const [showShareCard, setShowShareCard] = useState(false);
   const [showComments, setShowComments] = useState(false);
   const postRef = useRef(null);
+  const socket = useSocket();
 
   useEffect(() => {
     const startedAt = Date.now();
@@ -52,6 +54,17 @@ function SinglePost() {
     setPost((current) => ({ ...current, likes }));
     setNotice(counted ? 'Your like warmed this page.' : 'You already liked this writing.');
   }, []);
+
+  useEffect(() => {
+    if (!socket || !post) return;
+    const handlePostDeleted = (postId) => {
+      if (post._id === postId) {
+        setPost(null);
+      }
+    };
+    socket.on('postDeleted', handlePostDeleted);
+    return () => socket.off('postDeleted', handlePostDeleted);
+  }, [socket, post]);
 
   if (isLoading) {
     return (

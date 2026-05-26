@@ -4,6 +4,7 @@ import PageTransition from '../components/PageTransition.jsx';
 import SEO from '../components/SEO.jsx';
 import WritingCard from '../components/WritingCard.jsx';
 import { publicService } from '../services/publicService.js';
+import { useSocket } from '../context/SocketContext.jsx';
 
 function Explore({ initialCategory }) {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -19,6 +20,7 @@ function Explore({ initialCategory }) {
     language: searchParams.get('language') || 'all',
     page: Number(searchParams.get('page')) || 1
   });
+  const socket = useSocket();
 
   const params = useMemo(() => filters, [filters]);
 
@@ -42,6 +44,15 @@ function Explore({ initialCategory }) {
       )
     );
   }, [params, setSearchParams]);
+
+  useEffect(() => {
+    if (!socket) return;
+    const handlePostDeleted = (postId) => {
+      setPosts((prev) => prev.filter((p) => p._id !== postId));
+    };
+    socket.on('postDeleted', handlePostDeleted);
+    return () => socket.off('postDeleted', handlePostDeleted);
+  }, [socket]);
 
   useEffect(() => {
     publicService

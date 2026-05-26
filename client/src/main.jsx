@@ -5,6 +5,7 @@ import App from './App.jsx';
 import ErrorBoundary from './components/ErrorBoundary.jsx';
 import { AuthProvider } from './context/AuthContext.jsx';
 import { ThemeProvider } from './context/ThemeContext.jsx';
+import { SocketProvider } from './context/SocketContext.jsx';
 import { getClientFingerprintAsync } from './utils/fingerprint.js';
 import { registerServiceWorker } from './utils/registerServiceWorker.js';
 import './styles/global.css';
@@ -18,7 +19,9 @@ ReactDOM.createRoot(document.getElementById('root')).render(
       <ThemeProvider>
         <BrowserRouter>
           <AuthProvider>
-            <App />
+            <SocketProvider>
+              <App />
+            </SocketProvider>
           </AuthProvider>
         </BrowserRouter>
       </ThemeProvider>

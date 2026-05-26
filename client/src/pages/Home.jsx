@@ -4,11 +4,13 @@ import PageTransition from '../components/PageTransition.jsx';
 import SEO from '../components/SEO.jsx';
 import WritingCard from '../components/WritingCard.jsx';
 import { publicService } from '../services/publicService.js';
+import { useSocket } from '../context/SocketContext.jsx';
 import { useEffect, useState } from 'react';
 
 function Home() {
   const [home, setHome] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const socket = useSocket();
   const { scrollY } = useScroll();
   const y = useTransform(scrollY, [0, 500], [0, -80]);
   const featured = home?.featured;
@@ -21,6 +23,26 @@ function Home() {
   useEffect(() => {
     publicService.home().then(({ data }) => setHome(data)).catch(() => setHome(null)).finally(() => setIsLoading(false));
   }, []);
+
+  useEffect(() => {
+    if (!socket) return;
+    const handlePostDeleted = (postId) => {
+      setHome((prev) => {
+        if (!prev) return prev;
+        const filterFn = (p) => p._id !== postId;
+        return {
+          ...prev,
+          featured: prev.featured?._id === postId ? null : prev.featured,
+          trending: prev.trending?.filter(filterFn) || [],
+          latest: prev.latest?.filter(filterFn) || [],
+          hindiFeatured: prev.hindiFeatured?._id === postId ? null : prev.hindiFeatured,
+          hindiTrending: prev.hindiTrending?.filter(filterFn) || [],
+        };
+      });
+    };
+    socket.on('postDeleted', handlePostDeleted);
+    return () => socket.off('postDeleted', handlePostDeleted);
+  }, [socket]);
 
   return (
     <PageTransition>

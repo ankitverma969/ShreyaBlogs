@@ -155,5 +155,10 @@ export const deletePost = asyncHandler(async (req, res) => {
     if (fs.existsSync(localPath)) fs.unlinkSync(localPath);
   });
 
+  const io = req.app.get('io');
+  if (io) {
+    io.emit('postDeleted', req.params.id);
+  }
+
   sendSuccess(res, { message: 'Post deleted' });
 });

@@ -2,6 +2,8 @@ import fs from 'fs';
 import path from 'path';
 import { fileURLToPath } from 'url';
 import Post from '../models/Post.js';
+import Comment from '../models/Comment.js';
+import PublicInteraction from '../models/PublicInteraction.js';
 import { AppError } from '../utils/AppError.js';
 import { getPagination, sendSuccess } from '../utils/apiResponse.js';
 import { asyncHandler } from '../utils/asyncHandler.js';
@@ -147,6 +149,11 @@ export const deletePost = asyncHandler(async (req, res) => {
   if (!post) {
     throw new AppError('Post not found', 404);
   }
+
+  await Promise.all([
+    Comment.deleteMany({ postId: post._id }),
+    PublicInteraction.deleteMany({ postId: post._id })
+  ]);
 
   [post.coverImage, ...post.media.map((item) => item.url)].filter(Boolean).forEach((url) => {
     const fileName = path.basename(url);

@@ -1,4 +1,4 @@
-const CACHE_NAME = 'shreya-writes-v2';
+const CACHE_NAME = 'shreya-writes-v3';
 const STATIC_ASSETS = ['/', '/manifest.json', '/robots.txt'];
 
 self.addEventListener('install', (event) => {
@@ -19,6 +19,10 @@ self.addEventListener('fetch', (event) => {
   const { request } = event;
 
   if (request.method !== 'GET') return;
+  
+  const url = new URL(request.url);
+  // Do not cache API requests to ensure fresh data
+  if (url.pathname.startsWith('/api/') || request.url.includes('/api/')) return;
 
   event.respondWith(
     caches.match(request).then((cached) => {
